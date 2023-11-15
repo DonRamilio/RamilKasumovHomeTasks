@@ -31,7 +31,7 @@ public class Main {
    * или отрицательное. Замечание: ноль считаем положительным числом.
    */
   static void isPositiveOrNegative(int a) {
-    System.out.println(a >= 0? "Положительное" : "Отпицательное");
+    System.out.println(a >= 0? "Положительное" : "Отрицательное");
   }
 
   /** Задание.3
