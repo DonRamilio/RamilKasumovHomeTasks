@@ -142,7 +142,6 @@ public static void task9() {
  *  и возвращающий одномерный массив типа int длиной len, каждая ячейка которого
  *  равна initialValue;
  */
-
 public static void task10(int len, int initialValue){
         int[] arr = new int[len];
         for (int i = 0; i < len; i++) {
