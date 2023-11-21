@@ -7,8 +7,8 @@ public class Animal {
     Animal.count++;
   }
 
-  public static int getCount() {
-    return count;
+  public static void printCreatedCount() {
+    System.out.println("Создано животных: " + count);
   }
 
   public void run(int distance) {
