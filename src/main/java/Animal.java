@@ -1,6 +1,6 @@
-public class Animal {
+public abstract class Animal {
   private static int count = 0;
-  private final String name;
+  protected final String name;
 
   public Animal(String name) {
     this.name = name;

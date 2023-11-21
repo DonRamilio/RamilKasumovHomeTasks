@@ -1,16 +1,25 @@
 class Main {
   public static void main(String[] args) {
-    Animal animal = new Animal("animal");
-    Animal cat = new Cat("Snowball");
-    Animal secondCat = new Cat("Paw");
-    Animal dog = new Dog("Scratchy");
+    Cat firstCat = new Cat("Snowball");
+    Cat secondCat = new Cat("Paw");
+    Dog dog = new Dog("Scratchy");
 
-    cat.run(500);
-    cat.swim(100);
+    firstCat.run(500);
+    firstCat.swim(100);
     dog.run(120);
 
     Animal.printCreatedCount();
     Cat.printCreatedCount();
     Dog.printCreatedCount();
+
+    Cat[] cats = new Cat[]{firstCat, secondCat};
+    Plate plate = new Plate();
+    plate.putFood(50);
+    for (Cat currentCat : cats) {
+      firstCat.eat(plate, 30);
+    }
+    firstCat.printFullnessInfo();
+    secondCat.printFullnessInfo();
+
   }
 }
