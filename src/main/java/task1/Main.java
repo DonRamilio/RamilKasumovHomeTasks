@@ -1,3 +1,5 @@
+package task1;
+
 class Main {
   public static void main(String[] args) {
     Cat firstCat = new Cat("Snowball");

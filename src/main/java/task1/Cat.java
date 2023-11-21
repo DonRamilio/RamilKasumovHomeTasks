@@ -1,3 +1,5 @@
+package task1;
+
 public class Cat extends Animal {
   private static int count = 0;
   private boolean isFull = false;
