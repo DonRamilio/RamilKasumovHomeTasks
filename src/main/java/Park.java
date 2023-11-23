@@ -7,21 +7,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task2 {
-
-  public static void main(String[] args) {
-    Park park = new Park();
-    park.addAttraction("Колесо обозрения", "10:00 - 23:00", 500);
-    park.addAttraction(new Park.Attraction("Американские горки", "12:00 - 22:00", 700));
-
-    List<Park.Attraction> attractionList = park.getAttractions();
-    for (Park.Attraction attraction : attractionList) {
-      System.out.println(attraction);
-    }
-  }
-}
-
-class Park {
+public class Park {
 
   private final List<Attraction> attractions = new ArrayList<>();
 
