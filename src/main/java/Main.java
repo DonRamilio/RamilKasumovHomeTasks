@@ -14,17 +14,17 @@ public class Main {
     for (Person person : persArray) {
       if (person.getAge() > 40) {
         System.out.println(person);
-
-        Park park = new Park();
-        park.addAttraction("Колесо обозрения", "10:00 - 23:00", 500);
-        park.addAttraction(new Park.Attraction("Американские горки", "12:00 - 22:00", 700));
-
-        System.out.println("\nTask 2:" + "\n");
-        List<Park.Attraction> attractionList = park.getAttractions();
-        for (Park.Attraction attraction : attractionList) {
-          System.out.println(attraction);
-        }
       }
+    }
+
+    Park park = new Park();
+    park.addAttraction("Колесо обозрения", "10:00 - 23:00", 500);
+    park.addAttraction(new Park.Attraction("Американские горки", "12:00 - 22:00", 700));
+
+    System.out.println("\nTask 2:" + "\n");
+    List<Park.Attraction> attractionList = park.getAttractions();
+    for (Park.Attraction attraction : attractionList) {
+      System.out.println(attraction);
     }
   }
 }
