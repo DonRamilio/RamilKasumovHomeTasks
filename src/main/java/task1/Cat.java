@@ -18,7 +18,7 @@ public class Cat extends Animal {
     if (distance <= 200) {
       super.run(distance);
     } else {
-      System.out.println("Собака не может пробежать более 200м.");
+      System.out.println("Кошкэ не может пробежать более 200м.");
     }
   }
 
