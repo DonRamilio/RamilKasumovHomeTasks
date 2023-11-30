@@ -1,52 +1,54 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 1. Напишите метод, на вход которого подается двумерный строковый массив размером 4х4,
- * при подаче массива другого размера необходимо бросить исключение MyArraySizeException.
- * 2. Далее метод должен пройтись по всем элементам массива, преобразовать в int, и просуммировать.
- * Если в каком-то элементе массива преобразование не удалось (например, в ячейке лежит символ или текст вместо числа),
- * должно быть брошено исключение MyArrayDataException – с детализацией, в какой именно ячейке лежат неверные данные.
- * 3. В методе main() вызвать полученный метод, обработать возможные исключения MySizeArrayException и
- * MyArrayDataException и вывести результат расчета.
+ * Создать массив с набором слов (10-20 слов, должны встречаться повторяющиеся).
+ * Найти и вывести список уникальных слов, из которых состоит массив (дубликаты не считаем).
+ * Посчитать, сколько раз встречается каждое слово. (реализовать с использованием коллекций)
+ * Написать простой класс Телефонный Справочник, который хранит в себе список фамилий и телефонных номеров.
+ * В этот телефонный справочник с помощью метода add() можно добавлять записи, а с помощью метода get()
+ * искать номер телефона по фамилии. Следует учесть, что под одной фамилией может быть несколько телефонов
+ * (в случае однофамильцев), тогда при запросе такой фамилии должны выводиться все телефоны.
  */
+
+
 public class Main {
+  static final String FILE_NAME1 = "C://JAVA/Lesson_8.txt";
+  static final String FILE_NAME2 = "Lesson_8.txt";
 
   public static void main(String[] args) {
-
-    String[][] twoDimArray = new String[][]{{"1", "2", "3", "4"}, {"5", "6", "7", "8"}, {"8", "7", "6", "5"}, {"4", "3", "2", "1"}};
-    // int [][] twoDimArray = {{1,2,3,4}, {2,3,4,5}, {3,4,5,6}, {4,5,6,7}};
+    // first homework item
+    List<String> wordArray = new ArrayList<String>();
+    wordArray = ArrayOperation.fillTheArray(wordArray);
+    System.out.println(wordArray + "\n");
+    ArrayOperation.printUniqueWords(wordArray);
+    wordArray.clear();
     try {
-      try {
-        int result = calculateSum(twoDimArray);
-        System.out.println("Сумма: " + result);
-      } catch (MyArraySizeException e) {
-        System.out.println("Размер массива превышен!");
-      }
-    } catch (MyArrayDataException e) {
-      e.printStackTrace();
+      wordArray = ArrayOperation.fillTheArrayFromFile(wordArray, FILE_NAME2);
+    } catch (IOException e) {
+      System.out.println("Не удалось заполнить массив из файла!\n");
     }
+    try {
+      wordArray = ArrayOperation.fillTheArrayFromFile(wordArray, FILE_NAME1);
+    } catch (IOException e) {
+      System.out.println("Не удалось заполнить массив из файла!\n");
+    }
+    System.out.println(wordArray + "\n");
+    ArrayOperation.printUniqueWords(wordArray);
+
+    Phonebook phonebook = new Phonebook();
+
+    phonebook.add(1234567, "Волков");
+    phonebook.add(1234568, "Волков");
+    phonebook.add(1234566, "Собакин");
+    phonebook.add(1234564, "Котов");
+    phonebook.add(1234562, "Котов");
+
+
+    phonebook.get("Волков");
+    phonebook.get("Котов");
+    phonebook.get("Собакин");
+    phonebook.get("Тигров");
   }
-
-
-  public static int calculateSum(String[][] twoDimArray) throws MyArraySizeException, MyArrayDataException {
-    int sum = 0;
-    int desiredArrLength = 4;
-    int outerArrayLength = twoDimArray.length;
-    if (outerArrayLength != desiredArrLength) {
-      throw new MyArraySizeException();
-    }
-    for (int i = 0; i < outerArrayLength; i++) {
-      int innerArrayLength = twoDimArray[i].length;
-      if (innerArrayLength != desiredArrLength) {
-        throw new MyArraySizeException();
-      }
-      for (int j = 0; j < innerArrayLength; j++) {
-        try {
-          sum += Integer.parseInt(twoDimArray[i][j]);
-        } catch (NumberFormatException e) {
-          throw new MyArrayDataException(String.format("Не удалось преобразовать элемент в ячейке (%d;%d)", i, j));
-        }
-      }
-    }
-    return sum;
-  }
-
 }
