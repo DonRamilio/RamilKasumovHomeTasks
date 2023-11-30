@@ -1,6 +1,6 @@
 package task2;
 
-public abstract class Figure implements Colourable {
+public abstract class Figure implements Colourable, IFigure {
   protected String borderColor;
   protected String fillColor;
   protected double area;
@@ -10,10 +10,6 @@ public abstract class Figure implements Colourable {
     this.borderColor = borderColor;
     this.fillColor = fillColor;
   }
-
-  public abstract double calculateArea();
-
-  public abstract double calculatePerimeter();
 
   @Override
   public String getFillColor() {
@@ -34,4 +30,6 @@ public abstract class Figure implements Colourable {
   public void setBorderColor(String color) {
     this.borderColor = color;
   }
+
+  public abstract double calculatePerimeter();
 }
