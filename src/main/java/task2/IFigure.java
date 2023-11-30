@@ -1,7 +1,11 @@
 package task2;
 
 public interface IFigure {
-  double calculatePerimeter();
+  default double calculatePerimeter() {
+    return 0;
+  }
 
-  double calculateArea();
+  default double calculateArea() {
+    return 0;
+  }
 }
