@@ -1,54 +1,47 @@
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 
 /**
- * Создать массив с набором слов (10-20 слов, должны встречаться повторяющиеся).
- * Найти и вывести список уникальных слов, из которых состоит массив (дубликаты не считаем).
- * Посчитать, сколько раз встречается каждое слово. (реализовать с использованием коллекций)
- * Написать простой класс Телефонный Справочник, который хранит в себе список фамилий и телефонных номеров.
- * В этот телефонный справочник с помощью метода add() можно добавлять записи, а с помощью метода get()
- * искать номер телефона по фамилии. Следует учесть, что под одной фамилией может быть несколько телефонов
- * (в случае однофамильцев), тогда при запросе такой фамилии должны выводиться все телефоны.
+ * Написать программу(-ы), позволяющую(-ие) выполнить следуюющее:
+ * 1. Для любого набора случайно-сгенерированных чисел нужно определить количество чётных чисел.
+ * 2. Задана коллекция, состоящая из строк: «Highload», «High», «Load», «Highload». Нужно с ней выполнить следующие манипуляции:
+ * 2.1. Посчитать, сколько раз объект «High» встречается в коллекции;
+ * 2.2. Определить, какой элемент в коллекции находится на первом месте. Если мы получили пустую коллекцию, то пусть возвращается 0;
+ * 2.3. Необходимо вернуть последний элемент, если получили пустую коллекцию, то пусть возвращается 0;
+ * 3. Задана коллекция, содержащая элементы "f10", "f15", "f2", "f4", "f4". Необходимо отсортировать строки по возрастанию и добавить их в массив;
  */
-
-
 public class Main {
-  static final String FILE_NAME1 = "C://JAVA/Lesson_8.txt";
-  static final String FILE_NAME2 = "Lesson_8.txt";
-
   public static void main(String[] args) {
-    // first homework item
-    List<String> wordArray = new ArrayList<String>();
-    wordArray = ArrayOperation.fillTheArray(wordArray);
-    System.out.println(wordArray + "\n");
-    ArrayOperation.printUniqueWords(wordArray);
-    wordArray.clear();
-    try {
-      wordArray = ArrayOperation.fillTheArrayFromFile(wordArray, FILE_NAME2);
-    } catch (IOException e) {
-      System.out.println("Не удалось заполнить массив из файла!\n");
+//    1. Для любого набора случайно-сгенерированных чисел нужно определить количество чётных чисел.
+
+    List<Integer> task1List = new ArrayList<>();
+    int number;
+    Random rnd = new Random();
+
+    for (int i = 0; i < 10; i++) {
+      number = rnd.nextInt() % 100;
+      task1List.add(number);
     }
-    try {
-      wordArray = ArrayOperation.fillTheArrayFromFile(wordArray, FILE_NAME1);
-    } catch (IOException e) {
-      System.out.println("Не удалось заполнить массив из файла!\n");
-    }
-    System.out.println(wordArray + "\n");
-    ArrayOperation.printUniqueWords(wordArray);
 
-    Phonebook phonebook = new Phonebook();
+    long evensCount = task1List.stream().filter(n -> n % 2 == 0).count();
 
-    phonebook.add(1234567, "Волков");
-    phonebook.add(1234568, "Волков");
-    phonebook.add(1234566, "Собакин");
-    phonebook.add(1234564, "Котов");
-    phonebook.add(1234562, "Котов");
+    System.out.println("List for task 1: " + task1List);
+    System.out.println("Even numbers count: " + evensCount);
 
-
-    phonebook.get("Волков");
-    phonebook.get("Котов");
-    phonebook.get("Собакин");
-    phonebook.get("Тигров");
+    // 2. Задана коллекция, состоящая из строк: «Highload», «High», «Load», «Highload». Нужно с ней выполнить следующие манипуляции:
+    List<String> highLoadCollection = Arrays.asList("Highload", "High", "Load", "Highload");
+    // 2.1. Посчитать, сколько раз объект «High» встречается в коллекции;
+    var highCount = highLoadCollection.stream().filter("High"::equals).count();
+    // 2.2. Определить, какой элемент в коллекции находится на первом месте. Если мы получили пустую коллекцию, то пусть возвращается 0;
+    var firstElement = highLoadCollection.stream().findFirst().orElse("0");
+    // 2.3. Необходимо вернуть последний элемент, если получили пустую коллекцию, то пусть возвращается 0;
+    var lastElement = highLoadCollection.stream().skip(highLoadCollection.size() - 1).findFirst().orElse("0");
+    // 3. Задана коллекция, содержащая элементы "f10", "f15", "f2", "f4", "f4". Необходимо отсортировать строки по возрастанию и добавить их в массив;
+    var fCollection = Arrays.asList("f10", "f15", "f2", "f4", "f4");
+    Function<String, Integer> extractNumericPart = (String f) -> Integer.parseInt(f.replace("f", ""));
+    var fArray = fCollection.stream().sorted().toArray(); // отсортировано по алфавиту
+    var fArray2 = fCollection.stream().sorted(Comparator.comparingInt(extractNumericPart::apply)).toArray(); // отсортировано по числовой части
   }
 }
+
+
