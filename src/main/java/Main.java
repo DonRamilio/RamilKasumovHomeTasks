@@ -1,47 +1,69 @@
-import java.util.*;
-import java.util.function.Function;
 
 /**
- * Написать программу(-ы), позволяющую(-ие) выполнить следуюющее:
- * 1. Для любого набора случайно-сгенерированных чисел нужно определить количество чётных чисел.
- * 2. Задана коллекция, состоящая из строк: «Highload», «High», «Load», «Highload». Нужно с ней выполнить следующие манипуляции:
- * 2.1. Посчитать, сколько раз объект «High» встречается в коллекции;
- * 2.2. Определить, какой элемент в коллекции находится на первом месте. Если мы получили пустую коллекцию, то пусть возвращается 0;
- * 2.3. Необходимо вернуть последний элемент, если получили пустую коллекцию, то пусть возвращается 0;
- * 3. Задана коллекция, содержащая элементы "f10", "f15", "f2", "f4", "f4". Необходимо отсортировать строки по возрастанию и добавить их в массив;
+ * 1. Даны классы Fruit, Apple extends Fruit, Orange extends Fruit;
+ * 2. Класс Box, в который можно складывать фрукты. Коробки условно сортируются по типу фрукта,
+ * поэтому в одну коробку нельзя сложить и яблоки, и апельсины;
+ * 3. Для хранения фруктов внутри коробки можно использовать ArrayList;
+ * 4. Сделать метод getWeight(), который высчитывает вес коробки, зная вес одного фрукта и их количество:
+ * вес яблока – 1.0f, апельсина – 1.5f (единицы измерения не важны);
+ * 5. Внутри класса Box сделать метод compare(), который позволяет сравнить текущую коробку с той,
+ * которую подадут в compare() в качестве параметра. true – если их массы равны, false в противоположном случае.
+ * Можно сравнивать коробки с яблоками и апельсинами;
+ * 6. Написать метод, который позволяет пересыпать фрукты из текущей коробки в другую.
+ * Помним про сортировку фруктов: нельзя яблоки высыпать в коробку с апельсинами. Соответственно,
+ * в текущей коробке фруктов не остается, а в другую перекидываются объекты, которые были в первой;
+ * 7. Не забываем про метод добавления фрукта в коробку.
  */
+
+
 public class Main {
+
   public static void main(String[] args) {
-//    1. Для любого набора случайно-сгенерированных чисел нужно определить количество чётных чисел.
 
-    List<Integer> task1List = new ArrayList<>();
-    int number;
-    Random rnd = new Random();
+    Apple apple1 = new Apple();
+    Orange orange1 = new Orange();
+    System.out.println(apple1.getWeight());
+    System.out.println(orange1.getWeight());
 
-    for (int i = 0; i < 10; i++) {
-      number = rnd.nextInt() % 100;
-      task1List.add(number);
-    }
+    FruitBox<Apple> appleBox = new FruitBox<Apple>(apple1, 3);
+    System.out.println(appleBox.getWeight());
+    FruitBox<Orange> orangeBox = new FruitBox<Orange>(orange1, 2);
+    System.out.println(orangeBox.getWeight());
 
-    long evensCount = task1List.stream().filter(n -> n % 2 == 0).count();
+    System.out.println();
+    System.out.println(orangeBox.compare(appleBox));
 
-    System.out.println("List for task 1: " + task1List);
-    System.out.println("Even numbers count: " + evensCount);
-
-    // 2. Задана коллекция, состоящая из строк: «Highload», «High», «Load», «Highload». Нужно с ней выполнить следующие манипуляции:
-    List<String> highLoadCollection = Arrays.asList("Highload", "High", "Load", "Highload");
-    // 2.1. Посчитать, сколько раз объект «High» встречается в коллекции;
-    var highCount = highLoadCollection.stream().filter("High"::equals).count();
-    // 2.2. Определить, какой элемент в коллекции находится на первом месте. Если мы получили пустую коллекцию, то пусть возвращается 0;
-    var firstElement = highLoadCollection.stream().findFirst().orElse("0");
-    // 2.3. Необходимо вернуть последний элемент, если получили пустую коллекцию, то пусть возвращается 0;
-    var lastElement = highLoadCollection.stream().skip(highLoadCollection.size() - 1).findFirst().orElse("0");
-    // 3. Задана коллекция, содержащая элементы "f10", "f15", "f2", "f4", "f4". Необходимо отсортировать строки по возрастанию и добавить их в массив;
-    var fCollection = Arrays.asList("f10", "f15", "f2", "f4", "f4");
-    Function<String, Integer> extractNumericPart = (String f) -> Integer.parseInt(f.replace("f", ""));
-    var fArray = fCollection.stream().sorted().toArray(); // отсортировано по алфавиту
-    var fArray2 = fCollection.stream().sorted(Comparator.comparingInt(extractNumericPart::apply)).toArray(); // отсортировано по числовой части
   }
 }
 
+
+abstract class Fruit {
+
+  private float weight;
+
+  Fruit() {
+  }
+
+  float getWeight() {
+    return weight;
+  }
+
+  void setWeight(float weight) {
+    this.weight = weight;
+  }
+}
+
+class Orange extends Fruit {
+
+  Orange() {
+    this.setWeight(1.5f);
+  }
+}
+
+class Apple extends Fruit {
+
+  Apple() {
+    this.setWeight(1.0f);
+  }
+}
 
